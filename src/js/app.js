@@ -108,6 +108,28 @@ function normalizeSearchText(value) {
   return normalizeText(value).toLocaleLowerCase('fa');
 }
 
+const ignoredWords = new Set([
+  'برای',
+  'های',
+  'در',
+  'از',
+  'با',
+  'به',
+  'یک',
+  'و',
+  'بر',
+  'the',
+  'and',
+  'for',
+  'with',
+]);
+
+function getQueryWords(value) {
+  return normalizeSearchText(value)
+    .split(/\s+/)
+    .filter((word) => word.length > 1 && !ignoredWords.has(word));
+}
+
 function showToast(message) {
   elements.toast.textContent = message;
   elements.toast.classList.add('is-visible');
@@ -133,6 +155,17 @@ function startSearch(value) {
     (elements.resultsPage.hidden ? elements.homeQuery : elements.resultsQuery).focus();
     return;
   }
+
+  if (getQueryWords(query).length === 0) {
+  showToast('عبارت جست‌وجو باید شامل واژه‌های مشخص‌تری باشد.');
+
+  const activeInput = elements.resultsPage.hidden
+    ? elements.homeQuery
+    : elements.resultsQuery;
+
+  activeInput.focus();
+  return;
+}
 
   state.query = query;
   elements.queryHeading.textContent = query;
@@ -169,40 +202,87 @@ function getYearRange() {
   return { from, to };
 }
 
-
 function getRelevanceScore(article, queryWords) {
   const title = normalizeSearchText(article.title);
   const terms = normalizeSearchText(article.terms.join(' '));
   const abstract = normalizeSearchText(article.abstract);
   const authors = normalizeSearchText(article.authors);
 
-  return queryWords.reduce((score, word) => {
-    if (title.includes(word)) return score + 5;
-    if (terms.includes(word)) return score + 3;
-    if (abstract.includes(word)) return score + 2;
-    if (authors.includes(word)) return score + 1;
-    return score;
-  }, 0);
+  const searchableText = [
+    title,
+    terms,
+    abstract,
+    authors,
+  ].join(' ');
+
+  const matchesAllWords = queryWords.every((word) =>
+    searchableText.includes(word)
+  );
+
+  if (!matchesAllWords) {
+    return 0;
+  }
+
+  let score = 0;
+
+  queryWords.forEach((word) => {
+    if (title.includes(word)) {
+      score += 8;
+    }
+
+    if (terms.includes(word)) {
+      score += 5;
+    }
+
+    if (abstract.includes(word)) {
+      score += 2;
+    }
+
+    if (authors.includes(word)) {
+      score += 1;
+    }
+  });
+  
+  const fullQuery = normalizeSearchText(state.query);
+
+  if (fullQuery && title.includes(fullQuery)) {
+    score += 10;
+  }
+
+  return score;
 }
 
 function getFilteredArticles(range) {
-  const ignoredWords = new Set(['برای', 'های', 'در', 'از', 'با', 'به', 'یک', 'و', 'بر', 'the', 'and', 'for', 'with']);
-  const queryWords = normalizeSearchText(state.query)
-    .split(/\s+/)
-    .filter((word) => word.length > 1 && !ignoredWords.has(word));
+  const queryWords = getQueryWords(state.query);
 
-  let articles = sampleArticles
-    .map((article) => ({ ...article, relevance: getRelevanceScore(article, queryWords) }))
+  if (queryWords.length === 0) {
+    return [];
+  }
+
+  const articles = sampleArticles
+    .map((article) => ({
+      ...article,
+      relevance: getRelevanceScore(article, queryWords),
+    }))
     .filter((article) => {
-      const matchesQuery = queryWords.length === 0 || article.relevance > 0;
-      const matchesFrom = range.from === null || article.year >= range.from;
-      const matchesTo = range.to === null || article.year <= range.to;
+      const matchesQuery = article.relevance > 0;
+      const matchesFrom =
+        range.from === null || article.year >= range.from;
+      const matchesTo =
+        range.to === null || article.year <= range.to;
+
       return matchesQuery && matchesFrom && matchesTo;
     });
 
-  if (elements.sortBy.value === 'newest') articles.sort((a, b) => b.year - a.year);
-  else if (elements.sortBy.value === 'oldest') articles.sort((a, b) => a.year - b.year);
-  else articles.sort((a, b) => b.relevance - a.relevance || b.year - a.year);
+  if (elements.sortBy.value === 'newest') {
+    articles.sort((a, b) => b.year - a.year);
+  } else if (elements.sortBy.value === 'oldest') {
+    articles.sort((a, b) => a.year - b.year);
+  } else {
+    articles.sort(
+      (a, b) => b.relevance - a.relevance || b.year - a.year
+    );
+  }
 
   return articles;
 }
@@ -348,3 +428,4 @@ elements.sortBy.addEventListener('change', renderArticles);
     }
   });
 });
+
