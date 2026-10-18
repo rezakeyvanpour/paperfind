@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="fa" dir="rtl">
   <head>
@@ -12,25 +13,35 @@
     <title>پژوهان — جست‌وجوی علمی</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    >
     <link
       href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     >
     <link rel="stylesheet" href="src/css/main.css">
+
     <script src="src/js/app.js" defer></script>
   </head>
 
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <a class="brand" href="#home" aria-label="پژوهان، صفحه اصلی">
+        <a
+          class="brand"
+          href="#homePage"
+          aria-label="پژوهان، صفحه اصلی"
+        >
           <span class="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/>
               <path d="M4 5.5v16M8 7h8M8 11h7"/>
             </svg>
           </span>
+
           <span class="brand-name">پژوهان</span>
         </a>
 
@@ -47,11 +58,11 @@
           aria-labelledby="homeTitle"
         >
           <div class="hero">
-            <div class="eyebrow">
+            <p class="eyebrow">
               <span class="eyebrow-line" aria-hidden="true"></span>
               برای کنجکاوی‌های جدی
               <span class="eyebrow-line" aria-hidden="true"></span>
-            </div>
+            </p>
 
             <h1 id="homeTitle">
               پاسخ پرسش‌هایت را
@@ -64,8 +75,16 @@
               روشن، متمرکز و بدون پیچیدگی.
             </p>
 
-            <form class="search-form" id="homeSearchForm" role="search">
-              <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <form
+              class="search-form"
+              id="homeSearchForm"
+              role="search"
+            >
+              <svg
+                class="search-icon"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
                 <circle cx="10.8" cy="10.8" r="6.8"/>
                 <path d="m16 16 4.5 4.5"/>
               </svg>
@@ -86,12 +105,15 @@
               </button>
             </form>
 
-            <div class="search-hint">
+            <p class="search-hint">
               <span class="hint-key">Enter ↵</span>
               برای شروع جست‌وجو
-            </div>
+            </p>
 
-            <div class="suggestions" aria-label="جست‌وجوهای پیشنهادی">
+            <div
+              class="suggestions"
+              aria-label="جست‌وجوهای پیشنهادی"
+            >
               <span class="suggestion-label">برای شروع:</span>
 
               <button
@@ -132,14 +154,18 @@
           aria-labelledby="resultsTitle"
           hidden
         >
-          <div class="results-heading">
-            <button class="back-link" id="backHome" type="button">
+          <header class="results-heading">
+            <button
+              class="back-link"
+              id="backHome"
+              type="button"
+            >
               <span aria-hidden="true">→</span>
               جست‌وجوی جدید
             </button>
 
             <div class="results-intro">
-              <div class="eyebrow eyebrow-right">نتایج جست‌وجو</div>
+              <p class="eyebrow eyebrow-right">نتایج جست‌وجو</p>
 
               <h1 id="resultsTitle">
                 مقالات مرتبط با
@@ -152,7 +178,11 @@
               </p>
             </div>
 
-            <form class="results-search" id="resultsSearchForm" role="search">
+            <form
+              class="results-search"
+              id="resultsSearchForm"
+              role="search"
+            >
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="10.8" cy="10.8" r="6.8"/>
                 <path d="m16 16 4.5 4.5"/>
@@ -161,31 +191,49 @@
               <input
                 id="resultsQuery"
                 name="q"
+                type="search"
                 maxlength="240"
                 aria-label="اصلاح عبارت جست‌وجو"
               >
 
-              <button type="submit" aria-label="جست‌وجو">بگرد</button>
+              <button type="submit" aria-label="جست‌وجو">
+                بگرد
+              </button>
             </form>
-          </div>
+          </header>
 
           <div class="results-layout">
-            <aside class="filters panel" aria-labelledby="filterTitle">
+            <aside
+              class="filters panel"
+              aria-labelledby="filterTitle"
+            >
               <div class="panel-title">
                 <h2 id="filterTitle">محدودکردن نتایج</h2>
-                <button class="reset-button" id="resetFilters" type="button">
+
+                <button
+                  class="reset-button"
+                  id="resetFilters"
+                  type="button"
+                >
                   پاک‌کردن
                 </button>
               </div>
 
-              <div class="filter-group">
-                <div class="filter-label">بازه سال انتشار</div>
+              <div
+                class="filter-group"
+                role="group"
+                aria-labelledby="yearRangeLabel"
+              >
+                <p class="filter-label" id="yearRangeLabel">
+                  بازه سال انتشار
+                </p>
 
                 <div class="year-fields">
                   <div>
                     <label for="yearFrom">از سال</label>
                     <input
                       id="yearFrom"
+                      name="yearFrom"
                       type="number"
                       inputmode="numeric"
                       min="1900"
@@ -198,6 +246,7 @@
                     <label for="yearTo">تا سال</label>
                     <input
                       id="yearTo"
+                      name="yearTo"
                       type="number"
                       inputmode="numeric"
                       min="1900"
@@ -213,26 +262,35 @@
               </div>
 
               <div class="filter-group">
-                <label class="filter-label" for="sortBy">مرتب‌سازی</label>
+                <label class="filter-label" for="sortBy">
+                  مرتب‌سازی
+                </label>
 
-                <select id="sortBy">
+                <select id="sortBy" name="sortBy">
                   <option value="relevance">مرتبط‌ترین</option>
                   <option value="newest">جدیدترین سال</option>
                   <option value="oldest">قدیمی‌ترین سال</option>
                 </select>
               </div>
 
-              <button class="apply-filters" id="applyFilters" type="button">
+              <button
+                class="apply-filters"
+                id="applyFilters"
+                type="button"
+              >
                 اعمال فیلترها
               </button>
 
-              <div class="filter-footnote">
+              <p class="filter-footnote">
                 <span class="info-icon" aria-hidden="true">i</span>
                 <span>فیلترها فعلاً روی داده‌های نمونه اعمال می‌شوند.</span>
-              </div>
+              </p>
             </aside>
 
-            <section class="results-main" aria-label="فهرست مقالات">
+            <section
+              class="results-main"
+              aria-label="فهرست مقالات"
+            >
               <div class="results-toolbar">
                 <div>
                   <strong id="resultCount">۰ مقاله</strong>
@@ -257,14 +315,26 @@
                 aria-live="polite"
               ></div>
 
-              <div class="empty-state" id="emptyState" hidden>
+              <section
+                class="empty-state"
+                id="emptyState"
+                aria-labelledby="emptyStateTitle"
+                hidden
+              >
                 <div class="empty-icon" aria-hidden="true">⌕</div>
-                <h2>مقاله‌ای در این بازه پیدا نشد</h2>
-                <p>بازه سال انتشار را تغییر بده یا فیلترها را پاک کن.</p>
+
+                <h2 id="emptyStateTitle">
+                  مقاله‌ای در این بازه پیدا نشد
+                </h2>
+
+                <p>
+                  بازه سال انتشار را تغییر بده یا فیلترها را پاک کن.
+                </p>
+
                 <button id="clearFromEmpty" type="button">
                   پاک‌کردن فیلترها
                 </button>
-              </div>
+              </section>
 
               <p class="results-disclaimer">
                 توجه: عنوان‌ها و مشخصات نمایش‌داده‌شده نمونه هستند و برای ارجاع
@@ -281,10 +351,16 @@
           <span class="footer-separator">/</span>
           جست‌وجوی علمی، ساده‌تر
         </span>
+
         <span>نسخه نمایشی اولیه</span>
       </footer>
 
-      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      <div
+        id="toast"
+        class="toast"
+        role="status"
+        aria-live="polite"
+      ></div>
     </div>
   </body>
 </html>

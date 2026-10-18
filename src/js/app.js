@@ -169,9 +169,6 @@ function getYearRange() {
   return { from, to };
 }
 
-function getSearchableText(article) {
-  return normalizeSearchText(`${article.title} ${article.authors} ${article.abstract} ${article.terms.join(' ')}`);
-}
 
 function getRelevanceScore(article, queryWords) {
   const title = normalizeSearchText(article.title);
@@ -324,11 +321,18 @@ document.querySelectorAll('.suggestion').forEach((button) => {
   });
 });
 
-document.querySelector('#backHome').addEventListener('click', () => {
+function returnToHome() {
   setPage('home');
   elements.homeQuery.value = state.query;
   elements.homeQuery.focus();
+}
+
+document.querySelector('.brand').addEventListener('click', (event) => {
+  event.preventDefault();
+  returnToHome();
 });
+
+document.querySelector('#backHome').addEventListener('click', returnToHome);
 
 document.querySelector('#applyFilters').addEventListener('click', renderArticles);
 document.querySelector('#resetFilters').addEventListener('click', resetFilters);
