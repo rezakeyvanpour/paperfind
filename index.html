@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171d27">
+    <meta
+      name="description"
+      content="جست‌وجوی مقالات علمی در یک فضای ساده و متمرکز."
+    >
+
+    <title>پژوهان — جست‌وجوی علمی</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="src/css/main.css">
+    <script src="src/js/app.js" defer></script>
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#home" aria-label="پژوهان، صفحه اصلی">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/>
+              <path d="M4 5.5v16M8 7h8M8 11h7"/>
+            </svg>
+          </span>
+          <span class="brand-name">پژوهان</span>
+        </a>
+
+        <div class="topbar-meta">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>فضای جست‌وجوی علمی</span>
+        </div>
+      </header>
+
+      <main>
+        <section
+          class="page page-home is-active"
+          id="homePage"
+          aria-labelledby="homeTitle"
+        >
+          <div class="hero">
+            <div class="eyebrow">
+              <span class="eyebrow-line" aria-hidden="true"></span>
+              برای کنجکاوی‌های جدی
+              <span class="eyebrow-line" aria-hidden="true"></span>
+            </div>
+
+            <h1 id="homeTitle">
+              پاسخ پرسش‌هایت را
+              <br>
+              <span>در پژوهش‌ها پیدا کن.</span>
+            </h1>
+
+            <p class="hero-copy">
+              موضوع موردنظرت را جست‌وجو کن و مسیرت را میان مقالات علمی پیدا کن؛
+              روشن، متمرکز و بدون پیچیدگی.
+            </p>
+
+            <form class="search-form" id="homeSearchForm" role="search">
+              <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.8"/>
+                <path d="m16 16 4.5 4.5"/>
+              </svg>
+
+              <input
+                id="homeQuery"
+                name="q"
+                type="search"
+                maxlength="240"
+                autocomplete="off"
+                placeholder="مثلاً: کاربرد هوش مصنوعی در تشخیص پزشکی"
+                aria-label="موضوع یا عنوان مقاله را وارد کنید"
+              >
+
+              <button class="search-submit" type="submit">
+                جست‌وجو
+                <span aria-hidden="true">←</span>
+              </button>
+            </form>
+
+            <div class="search-hint">
+              <span class="hint-key">Enter ↵</span>
+              برای شروع جست‌وجو
+            </div>
+
+            <div class="suggestions" aria-label="جست‌وجوهای پیشنهادی">
+              <span class="suggestion-label">برای شروع:</span>
+
+              <button
+                class="suggestion"
+                type="button"
+                data-query="هوش مصنوعی در آموزش"
+              >
+                هوش مصنوعی در آموزش
+              </button>
+
+              <button
+                class="suggestion"
+                type="button"
+                data-query="تأثیر تغییرات اقلیمی بر سلامت"
+              >
+                تغییرات اقلیمی و سلامت
+              </button>
+
+              <button
+                class="suggestion"
+                type="button"
+                data-query="یادگیری عمیق در پردازش زبان طبیعی"
+              >
+                پردازش زبان طبیعی
+              </button>
+            </div>
+          </div>
+
+          <div class="home-bottom">
+            <span>جست‌وجو را با یک پرسش خوب شروع کن.</span>
+            <span class="bottom-mark">P / 01</span>
+          </div>
+        </section>
+
+        <section
+          class="page page-results"
+          id="resultsPage"
+          aria-labelledby="resultsTitle"
+          hidden
+        >
+          <div class="results-heading">
+            <button class="back-link" id="backHome" type="button">
+              <span aria-hidden="true">→</span>
+              جست‌وجوی جدید
+            </button>
+
+            <div class="results-intro">
+              <div class="eyebrow eyebrow-right">نتایج جست‌وجو</div>
+
+              <h1 id="resultsTitle">
+                مقالات مرتبط با
+                <span id="queryHeading"></span>
+              </h1>
+
+              <p>
+                نتایج نمونه برای نمایش تجربه کاربری؛ هنوز به منبع علمی واقعی
+                متصل نیست.
+              </p>
+            </div>
+
+            <form class="results-search" id="resultsSearchForm" role="search">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.8"/>
+                <path d="m16 16 4.5 4.5"/>
+              </svg>
+
+              <input
+                id="resultsQuery"
+                name="q"
+                maxlength="240"
+                aria-label="اصلاح عبارت جست‌وجو"
+              >
+
+              <button type="submit" aria-label="جست‌وجو">بگرد</button>
+            </form>
+          </div>
+
+          <div class="results-layout">
+            <aside class="filters panel" aria-labelledby="filterTitle">
+              <div class="panel-title">
+                <h2 id="filterTitle">محدودکردن نتایج</h2>
+                <button class="reset-button" id="resetFilters" type="button">
+                  پاک‌کردن
+                </button>
+              </div>
+
+              <div class="filter-group">
+                <div class="filter-label">بازه سال انتشار</div>
+
+                <div class="year-fields">
+                  <div>
+                    <label for="yearFrom">از سال</label>
+                    <input
+                      id="yearFrom"
+                      type="number"
+                      inputmode="numeric"
+                      min="1900"
+                      max="2099"
+                      placeholder="۲۰۱۹"
+                    >
+                  </div>
+
+                  <div>
+                    <label for="yearTo">تا سال</label>
+                    <input
+                      id="yearTo"
+                      type="number"
+                      inputmode="numeric"
+                      min="1900"
+                      max="2099"
+                      placeholder="۲۰۲۵"
+                    >
+                  </div>
+                </div>
+
+                <p class="filter-note">
+                  برای دیدن مقالات یک بازه مشخص، سال شروع و پایان را وارد کن.
+                </p>
+              </div>
+
+              <div class="filter-group">
+                <label class="filter-label" for="sortBy">مرتب‌سازی</label>
+
+                <select id="sortBy">
+                  <option value="relevance">مرتبط‌ترین</option>
+                  <option value="newest">جدیدترین سال</option>
+                  <option value="oldest">قدیمی‌ترین سال</option>
+                </select>
+              </div>
+
+              <button class="apply-filters" id="applyFilters" type="button">
+                اعمال فیلترها
+              </button>
+
+              <div class="filter-footnote">
+                <span class="info-icon" aria-hidden="true">i</span>
+                <span>فیلترها فعلاً روی داده‌های نمونه اعمال می‌شوند.</span>
+              </div>
+            </aside>
+
+            <section class="results-main" aria-label="فهرست مقالات">
+              <div class="results-toolbar">
+                <div>
+                  <strong id="resultCount">۰ مقاله</strong>
+                  <span class="toolbar-muted">در این جست‌وجو</span>
+                </div>
+
+                <span class="demo-label">
+                  <span aria-hidden="true"></span>
+                  داده آزمایشی
+                </span>
+              </div>
+
+              <div
+                class="active-filters"
+                id="activeFilters"
+                aria-live="polite"
+              ></div>
+
+              <div
+                class="article-list"
+                id="articleList"
+                aria-live="polite"
+              ></div>
+
+              <div class="empty-state" id="emptyState" hidden>
+                <div class="empty-icon" aria-hidden="true">⌕</div>
+                <h2>مقاله‌ای در این بازه پیدا نشد</h2>
+                <p>بازه سال انتشار را تغییر بده یا فیلترها را پاک کن.</p>
+                <button id="clearFromEmpty" type="button">
+                  پاک‌کردن فیلترها
+                </button>
+              </div>
+
+              <p class="results-disclaimer">
+                توجه: عنوان‌ها و مشخصات نمایش‌داده‌شده نمونه هستند و برای ارجاع
+                علمی استفاده نشوند.
+              </p>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>
+          پژوهان
+          <span class="footer-separator">/</span>
+          جست‌وجوی علمی، ساده‌تر
+        </span>
+        <span>نسخه نمایشی اولیه</span>
+      </footer>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </div>
+  </body>
+</html>

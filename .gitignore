@@ -1,0 +1,27 @@
+
+# IDE: PyCharm
+.idea/
+*.iml
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+coverage/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
