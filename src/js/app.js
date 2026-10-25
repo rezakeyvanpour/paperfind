@@ -20,8 +20,10 @@ const elements = {
   emptyState: document.querySelector('#emptyState'),
   yearFrom: document.querySelector('#yearFrom'),
   yearTo: document.querySelector('#yearTo'),
+    yearRangeError: document.querySelector('#yearRangeError'),
   sortBy: document.querySelector('#sortBy'),
   activeFilters: document.querySelector('#activeFilters'),
+    resultsTitle: document.querySelector('#resultsTitle'),
 };
 
 const state = {
@@ -90,6 +92,8 @@ function startSearch(value) {
   resetFilters(elements);
   setPage('results');
   renderResults();
+  elements.resultsTitle.classList.add('is-focused');
+  elements.resultsTitle.focus();
 }
 
 function returnToHome(event) {
@@ -136,8 +140,13 @@ elements.sortBy.addEventListener('change', renderResults);
 
 [elements.yearFrom, elements.yearTo].forEach((input) => {
   input.addEventListener('input', () => {
-    input.removeAttribute('aria-invalid');
-  });
+  elements.yearFrom.removeAttribute('aria-invalid');
+  elements.yearTo.removeAttribute('aria-invalid');
+
+  elements.yearRangeError.textContent = '';
+  elements.yearRangeError.hidden = true;
+});
+
 
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {

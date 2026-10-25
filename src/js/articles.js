@@ -23,15 +23,7 @@ export function createArticleCard(article) {
   });
 
   const title = document.createElement('h2');
-  const titleButton = document.createElement('button');
-
-  titleButton.type = 'button';
-  titleButton.textContent = article.title;
-  titleButton.addEventListener('click', () => {
-    showToast('جزئیات مقاله در نسخه‌های بعدی اضافه می‌شود.');
-  });
-
-  title.append(titleButton);
+  title.textContent = article.title;
 
   const authors = document.createElement('p');
   authors.className = 'authors';
@@ -44,13 +36,6 @@ export function createArticleCard(article) {
   const actions = document.createElement('div');
   actions.className = 'article-actions';
 
-  const detailsButton = document.createElement('button');
-  detailsButton.type = 'button';
-  detailsButton.textContent = 'مشاهده جزئیات';
-  detailsButton.addEventListener('click', () => {
-    showToast('صفحه جزئیات مقاله هنوز پیاده‌سازی نشده است.');
-  });
-
   const copyButton = document.createElement('button');
   copyButton.type = 'button';
   copyButton.textContent = 'کپی عنوان';
@@ -60,7 +45,7 @@ export function createArticleCard(article) {
   sourceLabel.className = 'article-source';
   sourceLabel.textContent = 'منبع نمونه';
 
-  actions.append(detailsButton, copyButton, sourceLabel);
+  actions.append(copyButton, sourceLabel);
   card.append(topline, title, authors, abstract, actions);
 
   return card;

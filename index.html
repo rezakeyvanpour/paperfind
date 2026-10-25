@@ -95,7 +95,7 @@
               برای شروع جست‌وجو
             </p>
 
-            <div class="suggestions" aria-label="جست‌وجوهای پیشنهادی">
+            <div class="suggestions" role="group" aria-label="جست‌وجوهای پیشنهادی">
               <span class="suggestion-label">برای شروع:</span>
 
               <button class="suggestion" type="button" data-query="هوش مصنوعی در آموزش">
@@ -128,7 +128,7 @@
             <div class="results-intro">
               <p class="eyebrow eyebrow-right">نتایج جست‌وجو</p>
 
-              <h1 id="resultsTitle">
+              <h1 id="resultsTitle" tabindex="-1">
                 مقالات مرتبط با
                 <span id="queryHeading"></span>
               </h1>
@@ -167,12 +167,13 @@
                 </button>
               </div>
 
-              <div class="filter-group" role="group" aria-labelledby="yearRangeLabel">
-                <p class="filter-label" id="yearRangeLabel">بازه سال انتشار</p>
+              <fieldset class="filter-group year-range-group">
+                <legend class="filter-label">بازه سال انتشار</legend>
 
                 <div class="year-fields">
                   <div>
                     <label for="yearFrom">از سال</label>
+                      <p id="yearRangeError" class="filter-error" role="alert" hidden></p>
                     <input
                       id="yearFrom"
                       name="yearFrom"
@@ -181,6 +182,7 @@
                       min="1900"
                       max="2099"
                       placeholder="۲۰۱۹"
+                      aria-describedby="yearRangeError"
                     >
                   </div>
 
@@ -194,6 +196,7 @@
                       min="1900"
                       max="2099"
                       placeholder="۲۰۲۵"
+                      aria-describedby="yearRangeError"
                     >
                   </div>
                 </div>
@@ -201,7 +204,7 @@
                 <p class="filter-note">
                   برای دیدن مقالات یک بازه مشخص، سال شروع و پایان را وارد کن.
                 </p>
-              </div>
+            </fieldset>
 
               <div class="filter-group">
                 <label class="filter-label" for="sortBy">مرتب‌سازی</label>
@@ -226,7 +229,14 @@
             <section class="results-main" aria-label="فهرست مقالات">
               <div class="results-toolbar">
                 <div>
-                  <strong id="resultCount">۰ مقاله</strong>
+                    <strong
+                    id="resultCount"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                    >
+                      ۰ مقاله
+                    </strong>
                   <span class="toolbar-muted">در این جست‌وجو</span>
                 </div>
 
@@ -237,7 +247,7 @@
               </div>
 
               <div class="active-filters" id="activeFilters" aria-live="polite"></div>
-              <div class="article-list" id="articleList" aria-live="polite"></div>
+              <div class="article-list" id="articleList"></div>
 
               <section class="empty-state" id="emptyState" aria-labelledby="emptyStateTitle" hidden>
                 <div class="empty-icon" aria-hidden="true">⌕</div>

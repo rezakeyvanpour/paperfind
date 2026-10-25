@@ -1,3 +1,4 @@
+
 const ignoredWords = new Set([
   'برای',
   'های',
@@ -24,8 +25,7 @@ export function normalizeText(value) {
     .replace(/ك/g, 'ک')
     .replace(/\u200c/g, ' ')
     .replace(/\s+/g, ' ')
-    .trim()
-    .slice(0, 240);
+    .trim();
 }
 
 export function normalizeSearchText(value) {

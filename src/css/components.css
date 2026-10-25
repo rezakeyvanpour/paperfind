@@ -349,6 +349,17 @@
   opacity: 1;
 }
 
+.filter-error {
+  margin: 10px 0 0;
+  color: var(--color-danger);
+  font-size: var(--font-size-small);
+  line-height: 1.7;
+}
+
+.filter-error[hidden] {
+  display: none;
+}
+
 .filter-group select {
   appearance: auto;
 }
@@ -627,5 +638,13 @@
   transform: translateY(0);
   opacity: 1;
 }
+
+.year-range-group {
+  min-width: 0;
+  margin-inline: 0;
+  padding-inline: 0;
+  border: 0;
+}
+
 
 

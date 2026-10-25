@@ -1,20 +1,31 @@
 import { numberFormat, showToast } from './utils.js';
 
 export function getYearRange(elements) {
-  const from =
-    elements.yearFrom.value === '' ? null : Number(elements.yearFrom.value);
+  const from = elements.yearFrom.value === ''
+    ? null
+    : Number(elements.yearFrom.value);
 
-  const to =
-    elements.yearTo.value === '' ? null : Number(elements.yearTo.value);
+  const to = elements.yearTo.value === ''
+    ? null
+    : Number(elements.yearTo.value);
 
   const isValidYear = (year) =>
     year === null ||
     (Number.isInteger(year) && year >= 1900 && year <= 2099);
 
+  const errorElement = elements.yearRangeError;
+
   elements.yearFrom.removeAttribute('aria-invalid');
   elements.yearTo.removeAttribute('aria-invalid');
 
+  errorElement.textContent = '';
+  errorElement.hidden = true;
+
   if (!isValidYear(from) || !isValidYear(to)) {
+    const invalidInput = !isValidYear(from)
+      ? elements.yearFrom
+      : elements.yearTo;
+
     if (!isValidYear(from)) {
       elements.yearFrom.setAttribute('aria-invalid', 'true');
     }
@@ -23,14 +34,11 @@ export function getYearRange(elements) {
       elements.yearTo.setAttribute('aria-invalid', 'true');
     }
 
-    showToast('سال باید عددی بین ۱۹۰۰ تا ۲۰۹۹ باشد.');
-
-    const invalidInput = !isValidYear(from)
-      ? elements.yearFrom
-      : elements.yearTo;
+    errorElement.textContent =
+      'سال باید عددی بین ۱۹۰۰ تا ۲۰۹۹ باشد.';
+    errorElement.hidden = false;
 
     invalidInput.focus();
-
     return null;
   }
 
@@ -38,14 +46,17 @@ export function getYearRange(elements) {
     elements.yearFrom.setAttribute('aria-invalid', 'true');
     elements.yearTo.setAttribute('aria-invalid', 'true');
 
-    showToast('سال شروع نمی‌تواند از سال پایان بزرگ‌تر باشد.');
-    elements.yearFrom.focus();
+    errorElement.textContent =
+      'سال شروع نمی‌تواند از سال پایان بزرگ‌تر باشد.';
+    errorElement.hidden = false;
 
+    elements.yearFrom.focus();
     return null;
   }
 
   return { from, to };
 }
+
 
 export function renderActiveFilters(container, range) {
   container.replaceChildren();

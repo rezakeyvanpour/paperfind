@@ -118,6 +118,16 @@
   gap: 24px;
 }
 
+#resultsTitle {
+  border-radius: var(--radius-sm);
+}
+
+#resultsTitle.is-focused {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 6px;
+}
+
+
 .filters {
   position: sticky;
   top: 20px;
