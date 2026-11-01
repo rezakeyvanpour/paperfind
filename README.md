@@ -1,24 +1,32 @@
 # PaperFind
 
-A Persian-language academic article discovery platform focused on a simple, accessible search experience.
+A Persian-language academic article discovery interface built for a focused search experience.
 
-## Status
+## Current Status
 
-Frontend prototype in development. Search results use sample data and are not intended for academic citation.
+The frontend prototype is complete. Search and filtering currently run against a small in-memory sample dataset. Results are illustrative and must not be used as academic references.
 
-## Tech Stack
+## Stack
 
 - HTML5
 - CSS3
-- Vanilla JavaScript (ES Modules)
+- Vanilla JavaScript (ES modules)
 
 ## Features
 
-- Persian-language search interface
-- Sample article results with relevance-based ranking
+- Persian and English text normalization
+- Search across article titles, abstracts, authors, and metadata
+- Relevance-based result ranking
 - Sorting by relevance and publication year
-- Publication year range filters
+- Publication-year range filtering with validation
 - Responsive layout
+- Keyboard-accessible interactions
+
+## Run Locally
+
+Serve the project root with a local development server and open its URL in a browser.
+
+JavaScript ES modules require an HTTP server. Opening `index.html` directly through a `file://` URL is not supported.
 
 ## Project Structure
 
@@ -26,7 +34,6 @@ Frontend prototype in development. Search results use sample data and are not in
 paperfind/
 ├── index.html
 ├── README.md
-├── .gitignore
 └── src/
     ├── css/
     │   ├── base.css
@@ -39,14 +46,3 @@ paperfind/
         ├── filters.js
         ├── search.js
         └── utils.js
-```
-
-## Getting Started
-
-Run the project using a local development server, then open the local URL in your browser.
-
-For example, in PyCharm, use its built-in preview or a configured local server that supports JavaScript ES Modules.
-
-## Scope
-
-Current development focuses on the frontend. Backend services, live academic search, and integration with real scholarly sources have not yet been implemented.
