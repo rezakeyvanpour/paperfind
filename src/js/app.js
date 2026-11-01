@@ -5,7 +5,13 @@ import {
   resetFilters,
 } from './filters.js';
 import { renderArticleList } from './articles.js';
-import { getQueryWords, normalizeText, numberFormat, showToast } from './utils.js';
+import {
+  getQueryWords,
+  normalizeDigits,
+  normalizeText,
+  numberFormat,
+  showToast,
+} from './utils.js';
 
 const elements = {
   homePage: document.querySelector('#homePage'),
@@ -15,15 +21,16 @@ const elements = {
   homeQuery: document.querySelector('#homeQuery'),
   resultsQuery: document.querySelector('#resultsQuery'),
   queryHeading: document.querySelector('#queryHeading'),
+  resultsTitle: document.querySelector('#resultsTitle'),
   articleList: document.querySelector('#articleList'),
   resultCount: document.querySelector('#resultCount'),
   emptyState: document.querySelector('#emptyState'),
+  clearFromEmpty: document.querySelector('#clearFromEmpty'),
   yearFrom: document.querySelector('#yearFrom'),
   yearTo: document.querySelector('#yearTo'),
-    yearRangeError: document.querySelector('#yearRangeError'),
+  yearRangeError: document.querySelector('#yearRangeError'),
   sortBy: document.querySelector('#sortBy'),
   activeFilters: document.querySelector('#activeFilters'),
-    resultsTitle: document.querySelector('#resultsTitle'),
 };
 
 const state = {
@@ -39,7 +46,10 @@ function setPage(page) {
   elements.resultsPage.hidden = !showResults;
   elements.resultsPage.classList.toggle('is-active', showResults);
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 }
 
 function renderResults() {
@@ -63,11 +73,15 @@ function renderResults() {
   elements.emptyState.hidden = articles.length > 0;
   elements.articleList.hidden = articles.length === 0;
 
+  elements.clearFromEmpty.hidden =
+    range.from === null && range.to === null;
+
   renderActiveFilters(elements.activeFilters, range);
 }
 
 function startSearch(value) {
-  const query = normalizeText(value);
+  const query = normalizeText(value).slice(0, 240);
+
   const activeInput = elements.resultsPage.hidden
     ? elements.homeQuery
     : elements.resultsQuery;
@@ -92,7 +106,7 @@ function startSearch(value) {
   resetFilters(elements);
   setPage('results');
   renderResults();
-  elements.resultsTitle.classList.add('is-focused');
+
   elements.resultsTitle.focus();
 }
 
@@ -100,6 +114,7 @@ function returnToHome(event) {
   event?.preventDefault();
 
   setPage('home');
+
   elements.homeQuery.value = state.query;
   elements.homeQuery.focus();
 }
@@ -132,21 +147,32 @@ document.querySelectorAll('.suggestion').forEach((button) => {
 document.querySelector('.brand').addEventListener('click', returnToHome);
 document.querySelector('#backHome').addEventListener('click', returnToHome);
 
-document.querySelector('#applyFilters').addEventListener('click', renderResults);
-document.querySelector('#resetFilters').addEventListener('click', handleResetFilters);
-document.querySelector('#clearFromEmpty').addEventListener('click', handleResetFilters);
+document
+  .querySelector('#applyFilters')
+  .addEventListener('click', renderResults);
+
+document
+  .querySelector('#resetFilters')
+  .addEventListener('click', handleResetFilters);
+
+document
+  .querySelector('#clearFromEmpty')
+  .addEventListener('click', handleResetFilters);
 
 elements.sortBy.addEventListener('change', renderResults);
 
 [elements.yearFrom, elements.yearTo].forEach((input) => {
   input.addEventListener('input', () => {
-  elements.yearFrom.removeAttribute('aria-invalid');
-  elements.yearTo.removeAttribute('aria-invalid');
+    input.value = normalizeDigits(input.value)
+      .replace(/[^0-9]/g, '')
+      .slice(0, 4);
 
-  elements.yearRangeError.textContent = '';
-  elements.yearRangeError.hidden = true;
-});
+    elements.yearFrom.removeAttribute('aria-invalid');
+    elements.yearTo.removeAttribute('aria-invalid');
 
+    elements.yearRangeError.textContent = '';
+    elements.yearRangeError.hidden = true;
+  });
 
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {

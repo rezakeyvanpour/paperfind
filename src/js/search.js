@@ -1,18 +1,27 @@
 import { sampleArticles } from './data.js';
-import { getQueryWords, normalizeSearchText } from './utils.js';
+import {
+  getQueryWords,
+  normalizeSearchText,
+} from './utils.js';
 
 function getRelevanceScore(article, queryWords, query) {
   const title = normalizeSearchText(article.title);
-  const terms = normalizeSearchText(article.terms.join(' '));
+  const terms = normalizeSearchText((article.terms || []).join(' '));
   const abstract = normalizeSearchText(article.abstract);
   const authors = normalizeSearchText(article.authors);
-  const searchableText = [title, terms, abstract, authors].join(' ');
+  const source = normalizeSearchText(article.source);
+  const type = normalizeSearchText(article.type);
 
-  const matchesAllWords = queryWords.every((word) =>
-    searchableText.includes(word)
-  );
+  const searchableText = [
+    title,
+    terms,
+    abstract,
+    authors,
+    source,
+    type,
+  ].join(' ');
 
-  if (!matchesAllWords) {
+  if (!queryWords.every((word) => searchableText.includes(word))) {
     return 0;
   }
 
@@ -23,6 +32,8 @@ function getRelevanceScore(article, queryWords, query) {
     if (terms.includes(word)) score += 5;
     if (abstract.includes(word)) score += 2;
     if (authors.includes(word)) score += 1;
+    if (source.includes(word)) score += 1;
+    if (type.includes(word)) score += 1;
   });
 
   const fullQuery = normalizeSearchText(query);
